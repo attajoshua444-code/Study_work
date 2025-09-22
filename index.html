@@ -3,144 +3,129 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Study Group Feedback</title>
+  <title>Study Group Feedback — Embedded Form</title>
   <style>
     :root {
       --accent: #6C63FF;
       --accent2: #FF6B6B;
       --muted: #6b7280;
-      font-family: Inter, sans-serif;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     }
-    html, body { margin:0; padding:0; height:100%; }
+    html,body { height:100%; margin:0; padding:0; }
     .page { display:none; min-height:100vh; width:100%; }
     .active { display:flex; }
-    /* Welcome Page */
+    /* Welcome */
     #welcome {
       flex-direction:column; align-items:center; justify-content:center;
-      background:linear-gradient(135deg,#6C63FF,#FF6B6B);
-      color:white; text-align:center; padding:20px;
+      background:linear-gradient(135deg,#6C63FF 0%,#FF6B6B 100%);
+      color:#fff; text-align:center; padding:28px;
     }
-    #welcome h1 { font-size:2rem; margin-bottom:10px; }
-    #welcome p { font-size:1.1rem; max-width:500px; margin:0 auto 20px; }
-    #welcome button {
-      background:white; color:#6C63FF; padding:12px 24px;
-      font-size:1rem; border:none; border-radius:8px;
-      cursor:pointer; font-weight:bold;
+    #welcome h1 { font-size:2rem; margin:8px 0; }
+    #welcome p { font-size:1.05rem; max-width:660px; color: #f6f7fb; margin:0 0 20px; }
+    .btn {
+      background:#fff; color:var(--accent); padding:12px 20px; border-radius:10px;
+      border:none; cursor:pointer; font-weight:700; font-size:16px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.12);
     }
-    #welcome button:hover { background:#f1f1f1; }
-    /* Form Page */
+    .btn:active { transform:translateY(1px) }
+    /* Form page with colorful background */
     #formPage {
-      flex-direction:column; align-items:center;
-      background: radial-gradient(circle at top left, rgba(108,99,255,0.2), transparent 40%),
-                  radial-gradient(circle at bottom right, rgba(255,107,107,0.2), transparent 40%),
-                  linear-gradient(135deg,#0f172a,#081226,#02121a);
-      color:#0b1220; padding:20px;
+      flex-direction:column; align-items:center; padding:28px;
+      background:
+        radial-gradient(800px 400px at 10% 10%, rgba(108,99,255,0.12), transparent 10%),
+        radial-gradient(700px 350px at 90% 90%, rgba(255,107,107,0.08), transparent 8%),
+        linear-gradient(135deg,#0f172a 0%, #081226 60%, #02121a 100%);
+      color:#e6eefb;
     }
-    .form-container {
-      background:white; border-radius:12px; padding:20px;
-      max-width:800px; width:100%; box-shadow:0 8px 24px rgba(0,0,0,0.2);
+    .frame-wrap {
+      width:100%;
+      max-width:980px;
+      background: rgba(255,255,255,0.02);
+      border-radius:12px;
+      padding:12px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
     }
-    h2 { margin-top:0; }
-    label { display:block; font-size:14px; margin:10px 0 4px; color:var(--muted); }
-    input, textarea, select {
-      width:100%; padding:10px; border:1px solid #ddd;
-      border-radius:6px; margin-bottom:8px; font-size:14px;
+    /* Responsive iframe */
+    .the-iframe {
+      width:100%;
+      height:900px; /* adjust as needed for form length */
+      border:0;
+      border-radius:8px;
+      background:white;
+      display:block;
     }
-    .rating { display:flex; gap:10px; margin-bottom:10px; }
-    button.primary {
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      border:none; color:white; padding:10px 20px;
-      border-radius:8px; font-weight:bold; cursor:pointer;
+    .fallback {
+      margin-top:10px;
+      color:#cfe3ff;
+      font-size:14px;
     }
-    button.primary:hover { opacity:0.9; }
+    a.fallback-link { color:#fff; text-decoration:underline; }
+    /* small screens */
+    @media (max-width:720px){
+      .the-iframe { height:1200px; }
+    }
   </style>
 </head>
 <body>
-  <!-- Page 1: Welcome -->
-  <div id="welcome" class="page active">
-    <h1>Welcome to the Study Group Feedback</h1>
-    <p>We value your opinion! Click below to proceed and share your honest feedback with us. Your responses are anonymous unless you choose otherwise.</p>
-    <button id="proceedBtn">Click to Proceed</button>
+  <!-- Welcome -->
+  <div id="welcome" class="page active" role="main" aria-labelledby="welcomeTitle">
+    <h1 id="welcomeTitle">Welcome — Study Group Feedback</h1>
+    <p>Quick questions, honest answers. Click proceed and give us the lowdown — takes ~3 minutes. Your responses go straight to the organiser's spreadsheet.</p>
+    <button id="proceedBtn" class="btn" aria-label="Proceed to feedback form">Click to Proceed</button>
   </div>
 
-  <!-- Page 2: Form -->
-  <div id="formPage" class="page">
-    <div class="form-container">
-      <h2>Feedback Form</h2>
-      <form id="evaluationForm">
-        <label for="name">Name (optional)</label>
-        <input type="text" id="name" name="name" placeholder="Your name">
+  <!-- Form Page -->
+  <div id="formPage" class="page" aria-hidden="true">
+    <div class="frame-wrap" role="region" aria-label="Embedded Feedback Form">
+      <!--
+        Replace the src below with the embed src from Google Forms.
+        Example src format:
+        https://docs.google.com/forms/d/e/1FAIpQLSf.../viewform?embedded=true
+      -->
+      <iframe
+        id="googleFormIframe"
+        class="the-iframe"
+        src="YOUR_GOOGLE_FORM_EMBED_LINK"
+        title="Study Group Feedback Form"
+        loading="lazy"
+        allowfullscreen>
+      </iframe>
 
-        <label for="likes">What did you like most about the study group?</label>
-        <textarea id="likes" name="likes"></textarea>
-
-        <label for="challenges">Did you face any challenges?</label>
-        <textarea id="challenges" name="challenges"></textarea>
-
-        <label for="improvements">What should we improve?</label>
-        <textarea id="improvements" name="improvements"></textarea>
-
-        <label>Rate the overall study group performance (1–5)</label>
-        <div class="rating">
-          <label><input type="radio" name="performance" value="1">1</label>
-          <label><input type="radio" name="performance" value="2">2</label>
-          <label><input type="radio" name="performance" value="3">3</label>
-          <label><input type="radio" name="performance" value="4">4</label>
-          <label><input type="radio" name="performance" value="5" checked>5</label>
-        </div>
-
-        <label>Was anyone annoying in the study group?</label>
-        <select name="annoying">
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
-        </select>
-
-        <label for="annoying_person">If yes, who/what was annoying?</label>
-        <textarea id="annoying_person" name="annoying_person"></textarea>
-
-        <label for="takeaway">What key lesson or insight will you take away?</label>
-        <textarea id="takeaway" name="takeaway"></textarea>
-
-        <label for="recommend">Would you recommend this study group to others? Why/why not?</label>
-        <textarea id="recommend" name="recommend"></textarea>
-
-        <button type="submit" class="primary">Submit</button>
-      </form>
+      <div class="fallback">
+        If the form does not appear, <a id="openInNewTab" class="fallback-link" href="#" target="_blank" rel="noopener">open the feedback form in a new tab</a>.
+      </div>
     </div>
   </div>
 
   <script>
-    // Navigation
-    document.getElementById("proceedBtn").addEventListener("click", () => {
-      document.getElementById("welcome").classList.remove("active");
-      document.getElementById("formPage").classList.add("active");
-    });
+    // Navigation: Welcome -> Form (load iframe)
+    const proceedBtn = document.getElementById('proceedBtn');
+    const welcome = document.getElementById('welcome');
+    const formPage = document.getElementById('formPage');
+    const iframe = document.getElementById('googleFormIframe');
+    const fallbackLink = document.getElementById('openInNewTab');
 
-    // Your Apps Script Web App URL (already added for you)
-    const webAppUrl = "https://script.google.com/macros/s/AKfycbxa2oqtTSsix7a5l3lZalecD1AbH-TBPxrA6wReRj-Jg6BgJCvlVO2PuZO3VagORQYaWg/exec";
+    proceedBtn.addEventListener('click', () => {
+      welcome.classList.remove('active');
+      welcome.setAttribute('aria-hidden', 'true');
+      formPage.classList.add('active');
+      formPage.setAttribute('aria-hidden', 'false');
 
-    document.getElementById("evaluationForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const data = {};
-      fd.forEach((v, k) => data[k] = v);
-
-      try {
-        const res = await fetch(webAppUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-        if (res.ok) {
-          alert("✅ Thank you! Your response was recorded.");
-          e.target.reset();
-        } else {
-          alert("❌ Something went wrong.");
-        }
-      } catch (err) {
-        alert("⚠️ Error: " + err.message);
+      // If the iframe src is still the placeholder, warn the uploader
+      const src = iframe.getAttribute('src') || '';
+      if (src.includes('https://docs.google.com/forms/d/e/1FAIpQLSfL9ox79824Y5HxF6vxxfhFc4X5aHVAKes86WPoSxATevdb_A/viewform?usp=header') || src.trim() === '') {
+        alert('Heads-up: you need to replace the placeholder src with your Google Form embed link. Open the HTML and paste the embed URL into the iframe src.');
       }
+
+      // Set fallback link href to the iframe src so users can open in new tab if needed
+      fallbackLink.href = src;
     });
+
+    // Extra: if iframe src is valid, also set fallback link immediately (works for direct visit)
+    const initSrc = iframe.getAttribute('src');
+    if (initSrc && !initSrc.includes('YOUR_GOOGLE_FORM_EMBED_LINK')) {
+      fallbackLink.href = initSrc;
+    }
   </script>
 </body>
 </html>
