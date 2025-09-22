@@ -85,7 +85,7 @@
       <iframe
         id="googleFormIframe"
         class="the-iframe"
-        src="YOUR_GOOGLE_FORM_EMBED_LINK"
+        src="https://forms.gle/t46HEHQmFjogiX3w9"
         title="Study Group Feedback Form"
         loading="lazy"
         allowfullscreen>
@@ -113,7 +113,7 @@
 
       // If the iframe src is still the placeholder, warn the uploader
       const src = iframe.getAttribute('src') || '';
-      if (src.includes('https://docs.google.com/forms/d/e/1FAIpQLSfL9ox79824Y5HxF6vxxfhFc4X5aHVAKes86WPoSxATevdb_A/viewform?usp=header') || src.trim() === '') {
+      if (src.includes('YOUR_GOOGLE_FORM_EMBED_LINK') || src.trim() === '') {
         alert('Heads-up: you need to replace the placeholder src with your Google Form embed link. Open the HTML and paste the embed URL into the iframe src.');
       }
 
