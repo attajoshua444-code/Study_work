@@ -110,20 +110,21 @@
   </div>
 
   <script>
-
+    // Navigation
     document.getElementById("proceedBtn").addEventListener("click", () => {
-      
       document.getElementById("welcome").classList.remove("active");
-      
       document.getElementById("formPage").classList.add("active");
     });
-    const webAppUrl =https://script.google.com/macros/s/AKfycbxa2oqtTSsix7a5l3lZalecD1AbH-TBPxrA6wReRj-Jg6BgJCvlVO2PuZO3VagORQYaWg/exec;
+
+    // Your Apps Script Web App URL (already added for you)
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbxa2oqtTSsix7a5l3lZalecD1AbH-TBPxrA6wReRj-Jg6BgJCvlVO2PuZO3VagORQYaWg/exec";
 
     document.getElementById("evaluationForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const fd = new FormData(e.target);
       const data = {};
       fd.forEach((v, k) => data[k] = v);
+
       try {
         const res = await fetch(webAppUrl, {
           method: "POST",
